@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bancos y Balances</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="app">
+        <div v-if="!user">
+            <h1>Login</h1>
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" v-model="username">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" v-model="password">
+            <button @click="login">Iniciar Sesión</button>
+            <hr>
+            <h1>Registro</h1>
+            <label for="newUsername">Nuevo Usuario:</label>
+            <input type="text" id="newUsername" v-model="newUsername">
+            <label for="newPassword">Nueva Contraseña:</label>
+            <input type="password" id="newPassword" v-model="newPassword">
+            <button @click="register">Registrar</button>
+        </div>
+        <div v-else>
+            <h1>Bienvenido, { user }</h1>
+            <button @click="logout">Cerrar Sesión</button>
+            <hr>
+            <h2>Listado de Bancos</h2>
+            <ul>
+                <li v-for="bank in banks" :key="bank.id" @click="selectBank(bank)">
+                    {{ bank.name }}
+                </li>
+            </ul>
+
+            <div v-if="selectedBank">
+                <h2>{{ selectedBank.name }}</h2>
+                <p>KPI - Balance: {{ balance }}</p>
+
+                <h3>Movimientos</h3>
+                <ul>
+                    <li v-for="movement in movements" :key="movement.id">
+                        {{ movement.type }} - {{ movement.amount }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
